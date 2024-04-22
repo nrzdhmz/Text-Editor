@@ -23,24 +23,95 @@ let optionButton = document.querySelectorAll(".option-button");
 let advOptionButton = document.querySelectorAll(".adv-option-button");
 let text = document.getElementById('text-input');
 
-// if it is clicked any where other than text then the text will be saved in array every time textContent
 let savedTextContent = [];
+let currentIndex = -1;
+
 function save() {
-  const currentText = text.textContent;
-    if (savedTextContent.length === 0 || currentText !== savedTextContent[savedTextContent.length - 1]) {
+  const currentText = text.textContent.trim();
+  if (currentText === '') {
+    return;
+  }
+
+  if (savedTextContent.length === 0 || currentText !== savedTextContent[currentIndex]) {
+    if (currentIndex < savedTextContent.length - 1) {
+      savedTextContent = savedTextContent.slice(0, currentIndex + 1);
+    }
+
     savedTextContent.push(currentText);
+    currentIndex++;
     console.log("Content saved:", savedTextContent);
   }
 }
+
+function undoMethod() {
+  if (currentIndex > 0) { 
+    currentIndex--;
+    text.textContent = savedTextContent[currentIndex];
+  }else{
+    text.textContent = "";
+  }
+}
+
+function redoMethod() {
+  if (currentIndex < savedTextContent.length - 1){
+    currentIndex++
+    text.textContent = savedTextContent[currentIndex]
+  }
+}
+
+function textFormatting(tag) {
+  const selection = document.getSelection();
+
+  if (selection && selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0); 
+
+    const newElement = document.createElement(tag);
+
+    range.surroundContents(newElement);
+
+  }
+}
+
+bold.addEventListener("click", () => {
+  textFormatting("b"); 
+});
+
+italic.addEventListener("click", () => {
+  textFormatting("em"); 
+});
+
+underline.addEventListener("click", () => {
+  textFormatting("u"); 
+});
+
+strikethrough.addEventListener("click", () => {
+  textFormatting("strike"); 
+});
+
+superscript.addEventListener("click", () => {
+  textFormatting("sup"); 
+});
+
+subscript.addEventListener("click", () => {
+  textFormatting("sub"); 
+});
+
+
+
 document.addEventListener("click", (event) => {
   if (event.target !== text) {
     save();
   }
 });
 
-function undoMethod() {
-  savedTextContent.pop();
-  text.textContent = savedTextContent[savedTextContent.length - 1];
-}
+undo.addEventListener("click", () => {
+  if (text.textContent != '') {
+    undoMethod()}
+  }
+);
 
-undo.addEventListener("click", undoMethod);
+redo.addEventListener("click", () => {
+  redoMethod();
+});
+
+
