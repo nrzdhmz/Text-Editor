@@ -68,32 +68,37 @@ function textFormatting(tag) {
     const newElement = document.createElement(tag);
 
     range.surroundContents(newElement);
-
   }
 }
 
 bold.addEventListener("click", () => {
   textFormatting("b"); 
+  save();
 });
 
 italic.addEventListener("click", () => {
   textFormatting("em"); 
+  save();
 });
 
 underline.addEventListener("click", () => {
   textFormatting("u"); 
+  save();
 });
 
 strikethrough.addEventListener("click", () => {
-  textFormatting("strike"); 
+  textFormatting("strike");
+  save();
 });
 
 superscript.addEventListener("click", () => {
   textFormatting("sup"); 
+  save();
 });
 
 subscript.addEventListener("click", () => {
   textFormatting("sub"); 
+  save();
 });
 
 
@@ -113,5 +118,3 @@ undo.addEventListener("click", () => {
 redo.addEventListener("click", () => {
   redoMethod();
 });
-
-
