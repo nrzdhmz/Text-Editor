@@ -1,9 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
 body {
   display: flex;
   justify-content: center;
 }
 
-#text-input {
-  width: 90vw;
-  height: 80vh;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.container .options {
+  display: flex;
+  gap: 15px;
+  margin-top: 40px;
+}
+.container .options .option-button {
+  padding: 5px;
+}
+.container #text-input {
+  width: 88vw;
+  height: 75vh;
+  outline: none;
+  border: black 1px solid;
+  padding: 20px;
 }/*# sourceMappingURL=index.css.map */
