@@ -23,39 +23,39 @@ let optionButton = document.querySelectorAll(".option-button");
 let advOptionButton = document.querySelectorAll(".adv-option-button");
 let text = document.getElementById('text-input');
 
-let savedTextContent = [];
+let savedinnerHTML = [];
 let currentIndex = -1;
 
 function save() {
-  const currentText = text.textContent.trim();
+  const currentText = text.innerHTML.trim();
   if (currentText === '') {
     return;
   }
 
-  if (savedTextContent.length === 0 || currentText !== savedTextContent[currentIndex]) {
-    if (currentIndex < savedTextContent.length - 1) {
-      savedTextContent = savedTextContent.slice(0, currentIndex + 1);
+  if (savedinnerHTML.length === 0 || currentText !== savedinnerHTML[currentIndex]) {
+    if (currentIndex < savedinnerHTML.length - 1) {
+      savedinnerHTML = savedinnerHTML.slice(0, currentIndex + 1);
     }
 
-    savedTextContent.push(currentText);
+    savedinnerHTML.push(currentText);
     currentIndex++;
-    console.log("Content saved:", savedTextContent);
+    console.log("Content saved:", savedinnerHTML);
   }
 }
 
 function undoMethod() {
   if (currentIndex > 0) { 
     currentIndex--;
-    text.textContent = savedTextContent[currentIndex];
+    text.innerHTML = savedinnerHTML[currentIndex];
   }else{
-    text.textContent = "";
+    text.innerHTML = "";
   }
 }
 
 function redoMethod() {
-  if (currentIndex < savedTextContent.length - 1){
+  if (currentIndex < savedinnerHTML.length - 1){
     currentIndex++
-    text.textContent = savedTextContent[currentIndex]
+    text.innerHTML = savedinnerHTML[currentIndex]
   }
 }
 
@@ -110,7 +110,7 @@ document.addEventListener("click", (event) => {
 });
 
 undo.addEventListener("click", () => {
-  if (text.textContent != '') {
+  if (text.innerHTML != '') {
     undoMethod()}
   }
 );
