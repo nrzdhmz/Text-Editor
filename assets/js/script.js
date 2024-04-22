@@ -72,7 +72,6 @@ function textFormatting(tag) {
   }
 }
 
-
 bold.addEventListener("click", () => {
   textFormatting("b"); 
   save();
@@ -121,3 +120,24 @@ redo.addEventListener("click", () => {
   redoMethod();
 });
 
+
+function setTextAlignment(alignment) {
+  text.style.textAlign = alignment;
+  save(); 
+}
+
+justifyLeft.addEventListener("click", () => {
+  setTextAlignment("left");
+});
+
+justifyCenter.addEventListener("click", () => {
+  setTextAlignment("center");
+});
+
+justifyRight.addEventListener("click", () => {
+  setTextAlignment("right");
+});
+
+justifyFull.addEventListener("click", () => {
+  setTextAlignment("justify");
+});
