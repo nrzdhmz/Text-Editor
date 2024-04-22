@@ -118,3 +118,5 @@ undo.addEventListener("click", () => {
 redo.addEventListener("click", () => {
   redoMethod();
 });
+
+
