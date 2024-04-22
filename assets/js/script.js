@@ -26,6 +26,7 @@ let text = document.getElementById('text-input');
 let savedinnerHTML = [];
 let currentIndex = -1;
 
+
 function save() {
   const currentText = text.innerHTML.trim();
   if (currentText === '') {
@@ -70,6 +71,7 @@ function textFormatting(tag) {
     range.surroundContents(newElement);
   }
 }
+
 
 bold.addEventListener("click", () => {
   textFormatting("b"); 
@@ -118,5 +120,4 @@ undo.addEventListener("click", () => {
 redo.addEventListener("click", () => {
   redoMethod();
 });
-
 
