@@ -24,8 +24,32 @@ let advOptionButton = document.querySelectorAll(".adv-option-button");
 let text = document.getElementById('text-input');
 
 let savedinnerHTML = [];
+let formatIndexArray = [];
 let currentIndex = -1;
 
+
+text.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault(); 
+    const selection = document.getSelection();
+
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      const newDiv = document.createElement("div");
+      newDiv.appendChild(document.createElement("br")); 
+      
+      range.deleteContents(); 
+      range.insertNode(newDiv); 
+      
+      const newRange = document.createRange();
+      newRange.setStart(newDiv, 0);
+      newRange.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(newRange);
+    }
+    save();
+  }
+});
 
 function save() {
   const currentText = text.innerHTML.trim();
@@ -60,7 +84,7 @@ function redoMethod() {
   }
 }
 
-function textFormatting(tag) {
+function textSelection(tag) {   
   const selection = document.getSelection();
 
   if (selection && selection.rangeCount > 0) {
@@ -72,33 +96,52 @@ function textFormatting(tag) {
   }
 }
 
+function textFormatting(tag) {
+  let formatIndex = currentIndex;
+
+  formatIndexArray.push(formatIndex);
+  console.log(formatIndexArray);
+
+  formatIndexArray.forEach(item => {
+    const formatSelection = document.getSelection();
+
+    text.innerHTML =  savedinnerHTML[item] + `<${tag}>HERE</${tag}>`;
+  });
+} 
+
 bold.addEventListener("click", () => {
-  textFormatting("b"); 
-  save();
+  const selection = document.getSelection();
+  if (selection && !selection.isCollapsed) { 
+    textSelection("b");
+  } else {
+    textFormatting("b");
+  }
+  save();   
 });
 
+
 italic.addEventListener("click", () => {
-  textFormatting("em"); 
+  textSelection("em"); 
   save();
 });
 
 underline.addEventListener("click", () => {
-  textFormatting("u"); 
+  textSelection("u"); 
   save();
 });
 
 strikethrough.addEventListener("click", () => {
-  textFormatting("strike");
+  textSelection("strike");
   save();
 });
 
 superscript.addEventListener("click", () => {
-  textFormatting("sup"); 
+  textSelection("sup"); 
   save();
 });
 
 subscript.addEventListener("click", () => {
-  textFormatting("sub"); 
+  textSelection("sub"); 
   save();
 });
 
@@ -121,23 +164,54 @@ redo.addEventListener("click", () => {
 });
 
 
-function setTextAlignment(alignment) {
-  text.style.textAlign = alignment;
-  save(); 
+function setSelectionAlignment(alignment) {
+  const selection = document.getSelection();
+  
+  if (selection && selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0);
+    let startContainer = range.startContainer;
+    let endContainer = range.endContainer;
+
+    if (startContainer.nodeType === Node.TEXT_NODE) {
+      startContainer = startContainer.parentNode;
+    }
+    
+    if (endContainer.nodeType === Node.TEXT_NODE) {
+      endContainer = endContainer.parentNode;
+    }
+
+    const newWrapper = document.createElement("div");
+    newWrapper.style.textAlign = alignment;
+
+    const fragment = range.cloneContents();
+    newWrapper.appendChild(fragment);
+
+    range.deleteContents();
+
+    range.insertNode(newWrapper);
+
+    const newRange = document.createRange();
+    newRange.selectNodeContents(newWrapper);
+
+    selection.removeAllRanges();
+    selection.addRange(newRange);
+
+    save(); 
+  }
 }
 
 justifyLeft.addEventListener("click", () => {
-  setTextAlignment("left");
+  setSelectionAlignment("left");
 });
 
 justifyCenter.addEventListener("click", () => {
-  setTextAlignment("center");
+  setSelectionAlignment("center");
 });
 
 justifyRight.addEventListener("click", () => {
-  setTextAlignment("right");
+  setSelectionAlignment("right");
 });
 
 justifyFull.addEventListener("click", () => {
-  setTextAlignment("justify");
-});
+  setSelectionAlignment("justify");
+}); 
