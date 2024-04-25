@@ -8,6 +8,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  />
     <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
@@ -76,19 +80,37 @@
         </button>
 
         <!-- Headings -->
-        <select id="formatBlock" class="adv-option-button">
-          <option value="H1">H1</option>
-          <option value="H2">H2</option>
-          <option value="H3">H3</option>
-          <option value="H4">H4</option>
-          <option value="H5">H5</option>
-          <option value="H6">H6</option>
+        <select id="formatBlock">
+          <option value="h1">H1</option>
+          <option value="h2">H2</option>
+          <option value="h3">H3</option>
+          <option value="h4">H4</option>
+          <option value="h5">H5</option>
+          <option value="h6">H6</option>
         </select>
 
-        <!-- Font -->
-        <select id="fontName" class="adv-option-button"></select>
-        <select id="fontSize" class="adv-option-button"></select>
 
+        <!-- Font -->
+        <select id="fontName">
+          <option value="Arial">Arial</option>
+          <option value="Poppins">Poppins</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Courier New">Courier New</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Verdana">Verdana</option>
+          <option value="Comic Sans MS">Comic Sans MS</option>
+        </select>       
+        
+        <!-- FontSize -->
+        <select id="fontSize">
+          <option value="12px">12px</option>
+          <option value="14px">14px</option>
+          <option value="16px">16px</option>
+          <option value="18px">18px</option>
+          <option value="20px">20px</option>
+          <option value="24px">24px</option>
+          <option value="30px">30px</option>
+        </select>
         <!-- Color -->
         <div class="input-wrapper">
           <input type="color" id="foreColor" class="adv-option-button" />

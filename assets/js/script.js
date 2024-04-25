@@ -27,6 +27,16 @@ let savedinnerHTML = [];
 let formatIndexArray = [];
 let currentIndex = -1;
 
+function updateFontFamily(fontFamily) {
+  text.style.fontFamily = fontFamily;
+} 
+
+fontName.addEventListener("change", (e) => {
+  const selectedFont = e.target.value; 
+  updateFontFamily(selectedFont); 
+  save();
+});
+
 
 text.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
@@ -77,17 +87,27 @@ function save() {
 document.addEventListener("click", (event) => {
   if (event.target !== text) {
     const textContent = text.innerHTML.trim();
+    const formattingTags = ["em", "sub", "sup", "u", "strike", "b"];
+    
+    let endsWithTag = false;
 
-    const asteresk = textContent.endsWith("<b>*</b>");
+    formattingTags.forEach((tag) => {
+      const formattedEnd = `<${tag}>*<\/${tag}>`;
+      if (textContent.endsWith(formattedEnd)) {
+        endsWithTag = true;
+      }
+    });
+
     const nbsp = textContent.endsWith('&nbsp;');
 
-    if (!nbsp && !asteresk) {
+    if (!endsWithTag && !nbsp) {
       text.innerHTML += '&nbsp;';
     }
 
     save();
   }
 });
+
 
 
 function undoMethod() {
@@ -263,3 +283,16 @@ justifyRight.addEventListener("click", () => {
 justifyFull.addEventListener("click", () => {
   setSelectionAlignment("justify");
 }); 
+
+
+
+document.getElementById("fontSize").addEventListener("change", (e) => {
+  const size = e.target.value;
+  document.execCommand("fontSize", false, "7"); 
+
+  const fontElements = document.querySelectorAll("font[size='7']");
+  fontElements.forEach((elem) => {
+    elem.removeAttribute("size");
+    elem.style.fontSize = size;
+  });
+});
