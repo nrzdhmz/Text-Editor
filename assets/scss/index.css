@@ -9,6 +9,10 @@ body {
   justify-content: center;
 }
 
+.bolder {
+  font-weight: bold;
+}
+
 .container {
   display: flex;
   flex-direction: column;

@@ -51,9 +51,12 @@ text.addEventListener("keydown", (event) => {
   }
 });
 
+
+
 function save() {
   const currentText = text.innerHTML.trim();
-  if (currentText === '') {
+
+  if (currentText === '' || currentText === '&nbsp;') {
     return;
   }
 
@@ -64,9 +67,28 @@ function save() {
 
     savedinnerHTML.push(currentText);
     currentIndex++;
+
     console.log("Content saved:", savedinnerHTML);
   }
 }
+
+
+
+document.addEventListener("click", (event) => {
+  if (event.target !== text) {
+    const textContent = text.innerHTML.trim();
+
+    const asteresk = textContent.endsWith("<b>*</b>");
+    const nbsp = textContent.endsWith('&nbsp;');
+
+    if (!nbsp && !asteresk) {
+      text.innerHTML += '&nbsp;';
+    }
+
+    save();
+  }
+});
+
 
 function undoMethod() {
   if (currentIndex > 0) { 
@@ -103,45 +125,71 @@ function textFormatting(tag) {
   console.log(formatIndexArray);
 
   formatIndexArray.forEach(item => {
-    const formatSelection = document.getSelection();
-
-    text.innerHTML =  savedinnerHTML[item] + `<${tag}>HERE</${tag}>`;
+    text.innerHTML =  savedinnerHTML[item] + `<${tag}>*</${tag}>`;
   });
 } 
 
 bold.addEventListener("click", () => {
+  save();
   const selection = document.getSelection();
-  if (selection && !selection.isCollapsed) { 
+  if (selection && !selection.isCollapsed) {
     textSelection("b");
   } else {
     textFormatting("b");
   }
-  save();   
 });
 
 
 italic.addEventListener("click", () => {
-  textSelection("em"); 
   save();
+  const selection = document.getSelection();
+  if (selection && !selection.isCollapsed) { 
+    textSelection("em");
+  } else {
+    textFormatting("em");
+  }  save();
 });
 
 underline.addEventListener("click", () => {
-  textSelection("u"); 
   save();
+  const selection = document.getSelection();
+  if (selection && !selection.isCollapsed) {  
+    textSelection("u");
+  } else {
+    textFormatting("u");
+  }  save();
 });
 
 strikethrough.addEventListener("click", () => {
-  textSelection("strike");
+  save();
+  const selection = document.getSelection();
+  if (selection && !selection.isCollapsed) { 
+    textSelection("strike");
+  } else {
+    textFormatting("strike");
+  }
   save();
 });
 
 superscript.addEventListener("click", () => {
-  textSelection("sup"); 
+  save();
+  const selection = document.getSelection();
+  if (selection && !selection.isCollapsed) { 
+    textSelection("sup");
+  } else {
+    textFormatting("sup");
+  }
   save();
 });
 
 subscript.addEventListener("click", () => {
-  textSelection("sub"); 
+  save();
+  const selection = document.getSelection();
+  if (selection && !selection.isCollapsed) { 
+    textSelection("sub");
+  } else {
+    textFormatting("sub");
+  }
   save();
 });
 

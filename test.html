@@ -48,6 +48,7 @@
 
     <script>
         const text = document.getElementById('text-input');
+        console.log(document.execCommand);
 
         const execCommandHandler = (command, value = null) => {
             document.execCommand(command, false, value);
