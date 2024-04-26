@@ -45,3 +45,19 @@ Undo/Redo Not Working: Ensure you've made changes to the text before attempting 
 Download Not Working: If the download does not work, try refreshing the page and attempting again.
 Feedback and Support
 If you encounter any issues or have feedback on the text editor, please reach out to the development team or submit a bug report. We appreciate your input and strive to improve the text editor based on user feedback.
+
+
+function creatingListTypes(list, listItem) {
+  let listContent = `<${listItem}>*</${listItem}>`;
+
+  formatIndexArray.forEach((item) => {
+    let newInnerHTML = `<${list}>`;
+    extractedContentArray.forEach((content) => {
+      newInnerHTML += content;
+    });
+    newInnerHTML += listContent + `</${list}>`;
+     
+    console.log(newInnerHTML);
+    // text.innerHTML = savedinnerHTML[item] + newInnerHTML;
+  });
+}

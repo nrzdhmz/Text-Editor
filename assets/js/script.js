@@ -268,14 +268,25 @@ subscript.addEventListener("click", () => {combineFunctions("sub");});
 
 
 
+const listArray = [];
 
-function creatingListTypes(list, listItem) {
-  let listContent = `<${listItem}>*</${listItem}>`;
-  const listElement = `<${list}>${listContent}</${list}>`;
+function creatingListTypes(listType, listItemTag) {
+  const existingLists = text.querySelectorAll(listType);
 
-  formatIndexArray.forEach((item) => {
-    text.innerHTML = savedinnerHTML[item] + listElement;
-  });
+  if (existingLists.length > 0) {
+    const lastList = existingLists[existingLists.length - 1];
+    const newListItem = document.createElement(listItemTag);
+    newListItem.textContent = '*';
+    lastList.appendChild(newListItem);
+  } else {
+    const newList = document.createElement(listType);
+    const newListItem = document.createElement(listItemTag);
+    newListItem.textContent = '*';
+    newList.appendChild(newListItem);
+    text.appendChild(newList);
+  }
+
+  save();
 }
 
 const extractedContentArray = [];
