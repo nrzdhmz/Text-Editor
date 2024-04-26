@@ -62,9 +62,10 @@ function endsWithFormattingOrNBSP(textContent) {
     }
   });
 
+  const endsWithList = textContent.endsWith("l>");
   const endsWithNBSP = textContent.endsWith('&nbsp;');
   
-  return endsWithTag || endsWithNBSP;
+  return endsWithTag || endsWithNBSP || endsWithList;
 }
 
 function checkSpace() {
@@ -98,6 +99,7 @@ document.addEventListener("keydown", (event) => {
       event.preventDefault();
       checkSpace();
       filterSavedContent();
+      getLastListItem("li");
     }else if(event.key === 'b'){
       event.preventDefault();
       combineFunctions("b");
@@ -267,23 +269,41 @@ subscript.addEventListener("click", () => {combineFunctions("sub");});
 
 
 
-function creatingListTypes (list,listItem){
+function creatingListTypes(list, listItem) {
+  let listContent = `<${listItem}>*</${listItem}>`;
+  const listElement = `<${list}>${listContent}</${list}>`;
 
-  let formatIndex = currentIndex;
-  formatIndexArray.push(formatIndex);
-
-  formatIndexArray.forEach(item => {
-    text.innerHTML =  savedinnerHTML[item] + `<${list}><${listItem}>*</${listItem}></${list}>`;
+  formatIndexArray.forEach((item) => {
+    text.innerHTML = savedinnerHTML[item] + listElement;
   });
 }
 
+const extractedContentArray = [];
+
+function getLastListItem(listItem) {
+  const content = savedinnerHTML[currentIndex];
+  const lastOpenTagIndex = content.lastIndexOf(`<${listItem}>`);
+
+  const closingTag = `</${listItem}>`;
+  const closingTagIndex = content.indexOf(closingTag, lastOpenTagIndex);
+
+  const extractedContent = content.substring(
+    lastOpenTagIndex,
+    closingTagIndex + closingTag.length
+  );
+
+  extractedContentArray.push(extractedContent);
+  console.log('Extracted Content:', extractedContentArray);
+}
+
 insertOrderedList.addEventListener("click", () => {
-  creatingListTypes("ol","li");
+  creatingListTypes("ol", "li");
 });
 
 insertUnorderedList.addEventListener("click", () => {
-  creatingListTypes("ul","li");
+  creatingListTypes("ul", "li");
 });
+
 
 
 
