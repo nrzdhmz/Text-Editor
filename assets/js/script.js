@@ -1,7 +1,7 @@
-window.addEventListener('beforeunload', (event) => {
-  event.preventDefault();
-  event.returnValue = 'Are you sure you want to leave? You might lose unsaved changes.';
-});
+// window.addEventListener('beforeunload', (event) => {
+//   event.preventDefault();
+//   event.returnValue = 'Are you sure you want to leave? You might lose unsaved changes.';
+// });
 
 
 let bold = document.getElementById('bold');
@@ -26,7 +26,7 @@ let fontSize = document.getElementById('fontSize');
 let foreColor = document.getElementById('foreColor');
 let optionButton = document.querySelectorAll(".option-button");
 let advOptionButton = document.querySelectorAll(".adv-option-button");
-let text = document.getElementById('text-input');
+let text = document.getElementById('textArea');
 let fullScreen = document.getElementById('fullScreen');
 let info = document.getElementById('info')
 let infoContent = document.getElementById('infoContent')
@@ -106,6 +106,7 @@ document.addEventListener("keydown", (event) => {
       checkSpace();
       filterSavedContent();
       getLastListItem("li");
+      moveCursorToEnd(text);
     }else if(event.key === 'b'){
       event.preventDefault();
       combineFunctions("b");
@@ -177,7 +178,7 @@ text.addEventListener("keydown", (event) => {
       const selection = document.getSelection();
       if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-        const newDiv = document.createElement("div");
+        const newDiv = document.createElement("p");
         newDiv.appendChild(document.createElement("br")); 
 
         range.deleteContents(); 
@@ -205,6 +206,22 @@ function filterSavedContent() {
   }
 }
 
+function moveCursorToEnd(element) {
+  const range = document.createRange();
+  const selection = window.getSelection();
+
+  // Set the range to the last child of the element
+  range.selectNodeContents(element);
+  range.collapse(false); // Collapse range to end of content
+
+  // Remove any existing selections and add new range
+  selection.removeAllRanges();
+  selection.addRange(range);
+
+  // Ensure the cursor is visible when content is long
+  element.focus();
+}
+
 function save() {
   const currentText = text.innerHTML
 
@@ -221,6 +238,8 @@ function save() {
     currentIndex++;
 
     console.log("Content saved:", savedinnerHTML[currentIndex]);
+
+    moveCursorToEnd(text);
   }
 }
 
@@ -280,7 +299,7 @@ formatBlock.addEventListener("change", (e) => {
   let formatIndex = currentIndex;
   formatIndexArray.push(formatIndex);
   formatIndexArray.forEach(item => {
-    text.innerHTML = savedinnerHTML[item] + `<div style="font-size:${selectedSize};">*</div>`;
+    text.innerHTML = savedinnerHTML[item] + `<p style="font-size:${selectedSize};">*</p>`;
   });
 });
 
@@ -389,7 +408,7 @@ function setSelectionAlignment(alignment) {
       endContainer = endContainer.parentNode;
     }
 
-    const newWrapper = document.createElement("div");
+    const newWrapper = document.createElement("p");
     newWrapper.style.textAlign = alignment;
 
     const fragment = range.cloneContents();
@@ -462,5 +481,3 @@ upload.addEventListener("change", (e) => {
     reader.readAsText(file);
   }
 });
-
-// exit or not
