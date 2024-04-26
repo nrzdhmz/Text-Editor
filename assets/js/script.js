@@ -22,10 +22,21 @@ let backColor = document.getElementById('backColor');
 let optionButton = document.querySelectorAll(".option-button");
 let advOptionButton = document.querySelectorAll(".adv-option-button");
 let text = document.getElementById('text-input');
+let format = document.getElementById('format');
 
 let savedinnerHTML = [];
 let formatIndexArray = [];
 let currentIndex = -1;
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "\\") {
+    event.preventDefault();
+    save();
+    console.log("Save function called using '\\' key");
+  }
+});
+
+
 
 function updateFontFamily(fontFamily) {
   text.style.fontFamily = fontFamily;
@@ -57,10 +68,23 @@ text.addEventListener("keydown", (event) => {
       selection.removeAllRanges();
       selection.addRange(newRange);
     }
-    save();
   }
 });
 
+function filterSavedContent() {
+  save();
+
+  savedinnerHTML = savedinnerHTML.map(item => item.replace(/\*/gi, ''));
+  
+  if (savedinnerHTML.length > 0) {
+    text.innerHTML = savedinnerHTML[savedinnerHTML.length - 1];
+  }
+}
+
+format.addEventListener("click", () => {
+  filterSavedContent();
+  save();
+});
 
 
 function save() {
@@ -92,7 +116,7 @@ document.addEventListener("click", (event) => {
     let endsWithTag = false;
 
     formattingTags.forEach((tag) => {
-      const formattedEnd = `<${tag}>*<\/${tag}>`;
+      const formattedEnd = `>*<\/${tag}>`;
       if (textContent.endsWith(formattedEnd)) {
         endsWithTag = true;
       }
@@ -138,16 +162,28 @@ function textSelection(tag) {
   }
 }
 
+
 function textFormatting(tag) {
   let formatIndex = currentIndex;
 
   formatIndexArray.push(formatIndex);
-  console.log(formatIndexArray);
 
   formatIndexArray.forEach(item => {
     text.innerHTML =  savedinnerHTML[item] + `<${tag}>*</${tag}>`;
   });
 } 
+
+fontSize.addEventListener("change", (e) => {
+  const selectedSize = e.target.value;
+
+  let formatIndex = currentIndex;
+  formatIndexArray.push(formatIndex);
+  formatIndexArray.forEach(item => {
+    text.innerHTML = savedinnerHTML[item] + `<div style="font-size:${selectedSize};">*</div>`;
+  });
+});
+
+
 
 bold.addEventListener("click", () => {
   save();
@@ -284,15 +320,3 @@ justifyFull.addEventListener("click", () => {
   setSelectionAlignment("justify");
 }); 
 
-
-
-document.getElementById("fontSize").addEventListener("change", (e) => {
-  const size = e.target.value;
-  document.execCommand("fontSize", false, "7"); 
-
-  const fontElements = document.querySelectorAll("font[size='7']");
-  fontElements.forEach((elem) => {
-    elem.removeAttribute("size");
-    elem.style.fontSize = size;
-  });
-});

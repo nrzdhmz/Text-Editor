@@ -3,10 +3,15 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Arial;
+  font-size: 16px;
 }
 body{
   display: flex;
   justify-content: center;
+}
+#format{
+  width: 100px;
+  height: 30px;
 }
 .bolder{
   font-weight: bold;
@@ -15,8 +20,10 @@ body{
   display: flex;
   flex-direction: column;
   gap: 40px;
+  width: 80%;
   .options{
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     margin-top: 40px;
     .option-button{
@@ -24,8 +31,7 @@ body{
     }
   }
   #text-input{
-    width: 88vw;
-    height: 75vh;
+    height: 70vh;
     outline: none;
     border: black 1px solid;
     padding: 20px;
