@@ -183,10 +183,20 @@ fontSize.addEventListener("change", (e) => {
   let formatIndex = currentIndex;
   formatIndexArray.push(formatIndex);
   formatIndexArray.forEach(item => {
-    text.innerHTML = savedinnerHTML[item] + `<div style="font-size:${selectedSize};">*</div>`;
+    text.innerHTML = savedinnerHTML[item] + `<size style="font-size:${selectedSize};">*</size>`;
   });
 });
 
+
+formatBlock.addEventListener("change", (e) => {
+  const selectedSize = e.target.value;
+
+  let formatIndex = currentIndex;
+  formatIndexArray.push(formatIndex);
+  formatIndexArray.forEach(item => {
+    text.innerHTML = savedinnerHTML[item] + `<div style="font-size:${selectedSize};">*</div>`;
+  });
+});
 
 
 bold.addEventListener("click", () => {
