@@ -45,7 +45,7 @@ function endsWithFormattingOrNBSP(textContent) {
 }
 
 function checkSpace() {
-  const textContent = text.innerHTML.trim();
+  const textContent = text.innerHTML
 
   if (!endsWithFormattingOrNBSP(textContent)) {
     text.innerHTML += '&nbsp;';
@@ -122,7 +122,7 @@ format.addEventListener("click", () => {
 
 
 function save() {
-  const currentText = text.innerHTML.trim();
+  const currentText = text.innerHTML
 
   if (currentText === '' || currentText === '&nbsp;') {
     return;
