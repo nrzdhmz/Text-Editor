@@ -54,10 +54,21 @@ function checkSpace() {
 }
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "\\") {
-    event.preventDefault();
-    checkSpace();
-    filterSavedContent();
+  if (event.ctrlKey) {
+    if (event.key === 's'){
+      event.preventDefault();
+      checkSpace();
+      filterSavedContent();
+    }else if(event.key === 'b'){
+      event.preventDefault();
+      combineFunctions("b");
+    }else if(event.key === 'i'){
+      event.preventDefault();
+      combineFunctions("em");
+    }else if(event.key === 'u'){
+      event.preventDefault();
+      combineFunctions("u");
+    }
   }
 });
 
@@ -199,70 +210,23 @@ formatBlock.addEventListener("change", (e) => {
 });
 
 
-bold.addEventListener("click", () => {
+function  combineFunctions(tag){
   save();
   const selection = document.getSelection();
   if (selection && !selection.isCollapsed) {
-    textSelection("b");
+    textSelection(tag);
   } else {
-    textFormatting("b");
+    textFormatting(tag);
   }
-});
+};
 
 
-italic.addEventListener("click", () => {
-  save();
-  const selection = document.getSelection();
-  if (selection && !selection.isCollapsed) { 
-    textSelection("em");
-  } else {
-    textFormatting("em");
-  }  save();
-});
-
-underline.addEventListener("click", () => {
-  save();
-  const selection = document.getSelection();
-  if (selection && !selection.isCollapsed) {  
-    textSelection("u");
-  } else {
-    textFormatting("u");
-  }  save();
-});
-
-strikethrough.addEventListener("click", () => {
-  save();
-  const selection = document.getSelection();
-  if (selection && !selection.isCollapsed) { 
-    textSelection("strike");
-  } else {
-    textFormatting("strike");
-  }
-  save();
-});
-
-superscript.addEventListener("click", () => {
-  save();
-  const selection = document.getSelection();
-  if (selection && !selection.isCollapsed) { 
-    textSelection("sup");
-  } else {
-    textFormatting("sup");
-  }
-  save();
-});
-
-subscript.addEventListener("click", () => {
-  save();
-  const selection = document.getSelection();
-  if (selection && !selection.isCollapsed) { 
-    textSelection("sub");
-  } else {
-    textFormatting("sub");
-  }
-  save();
-});
-
+bold.addEventListener("click", () => {combineFunctions("b");});
+italic.addEventListener("click", () => {combineFunctions("em");});
+underline.addEventListener("click", () => {combineFunctions("u");});
+strikethrough.addEventListener("click", () => {combineFunctions("strike");});
+superscript.addEventListener("click", () => {combineFunctions("sup");});
+subscript.addEventListener("click", () => {combineFunctions("sub");});
 
 
 document.addEventListener("click", (event) => {
@@ -314,7 +278,7 @@ function setSelectionAlignment(alignment) {
     selection.removeAllRanges();
     selection.addRange(newRange);
 
-    save(); 
+    save();
   }
 }
 
