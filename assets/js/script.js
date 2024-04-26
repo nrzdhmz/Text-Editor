@@ -1,3 +1,9 @@
+window.addEventListener('beforeunload', (event) => {
+  event.preventDefault();
+  event.returnValue = 'Are you sure you want to leave? You might lose unsaved changes.';
+});
+
+
 let bold = document.getElementById('bold');
 let italic = document.getElementById('italic');
 let underline = document.getElementById('underline');
@@ -214,7 +220,7 @@ function save() {
     savedinnerHTML.push(currentText);
     currentIndex++;
 
-    console.log("Content saved:", savedinnerHTML);
+    console.log("Content saved:", savedinnerHTML[currentIndex]);
   }
 }
 
@@ -336,7 +342,7 @@ function getLastListItem(listItem) {
   );
 
   extractedContentArray.push(extractedContent);
-  console.log('Extracted Content:', extractedContentArray);
+  // console.log('Extracted Content:', extractedContentArray);
 }
 
 insertOrderedList.addEventListener("click", () => {
@@ -457,3 +463,4 @@ upload.addEventListener("change", (e) => {
   }
 });
 
+// exit or not

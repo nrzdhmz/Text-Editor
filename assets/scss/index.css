@@ -49,6 +49,7 @@ body {
 }
 .buttons .load:hover {
   scale: 1.1;
+  background-color: #dfdfdf;
 }
 .buttons .load img {
   margin-top: 2px;
@@ -77,6 +78,7 @@ body {
 }
 .container .options .option-button:hover {
   scale: 1.1;
+  background-color: #dfdfdf;
 }
 .container .options .option-advanced {
   border-radius: 4px;
@@ -87,6 +89,7 @@ body {
 }
 .container .options .option-advanced:hover {
   scale: 1.1;
+  background-color: #dfdfdf;
 }
 .container .options .input-wrapper {
   display: flex;
@@ -100,6 +103,7 @@ body {
 }
 .container .options .input-wrapper:hover {
   scale: 1.1;
+  background-color: #dfdfdf;
 }
 .container #text-input {
   margin-top: 10px;
@@ -135,7 +139,5 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 1000;
-  -webkit-clip-path: inset(0);
-          clip-path: inset(0);
   transition: opacity 0.3s;
 }/*# sourceMappingURL=index.css.map */
