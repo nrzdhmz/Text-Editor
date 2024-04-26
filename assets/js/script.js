@@ -135,27 +135,59 @@ fontName.addEventListener("change", (e) => {
 });
 
 
+function isInsideList() {
+  const selection = document.getSelection();
+  if (selection && selection.rangeCount > 0) {
+    const startContainer = selection.getRangeAt(0).startContainer;
+    const parent = startContainer.nodeType === Node.TEXT_NODE
+      ? startContainer.parentNode
+      : startContainer;
+
+    return parent.closest("ul, ol"); 
+  }
+
+  return false; 
+}
+
+
 text.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     event.preventDefault(); 
-    const selection = document.getSelection();
 
-    if (selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      const newDiv = document.createElement("div");
-      newDiv.appendChild(document.createElement("br")); 
-      
-      range.deleteContents(); 
-      range.insertNode(newDiv); 
-      
-      const newRange = document.createRange();
-      newRange.setStart(newDiv, 0);
-      newRange.collapse(true);
-      selection.removeAllRanges();
-      selection.addRange(newRange);
+    const listContext = isInsideList();
+    if (listContext) {
+      const newListItem = document.createElement("li");
+      newListItem.appendChild(document.createElement("br"));
+      listContext.appendChild(newListItem);
+
+      const selection = document.getSelection();
+      const range = document.createRange();
+      range.setStart(newListItem, 0);
+      range.collapse(true);
+
+      selection.removeAllRanges(); 
+      selection.addRange(range); 
+    } else {
+      const selection = document.getSelection();
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const newDiv = document.createElement("div");
+        newDiv.appendChild(document.createElement("br")); 
+
+        range.deleteContents(); 
+        range.insertNode(newDiv); 
+
+        const newRange = document.createRange();
+        newRange.setStart(newDiv, 0); 
+        newRange.collapse(true);
+
+        selection.removeAllRanges(); 
+        selection.addRange(newRange); 
+      }
     }
   }
 });
+
 
 function filterSavedContent() {
   save();
@@ -270,17 +302,17 @@ subscript.addEventListener("click", () => {combineFunctions("sub");});
 
 const listArray = [];
 
-function creatingListTypes(listType, listItemTag) {
+function creatingListTypes(listType, listItem) {
   const existingLists = text.querySelectorAll(listType);
 
   if (existingLists.length > 0) {
     const lastList = existingLists[existingLists.length - 1];
-    const newListItem = document.createElement(listItemTag);
+    const newListItem = document.createElement(listItem);
     newListItem.textContent = '*';
     lastList.appendChild(newListItem);
   } else {
     const newList = document.createElement(listType);
-    const newListItem = document.createElement(listItemTag);
+    const newListItem = document.createElement(listItem);
     newListItem.textContent = '*';
     newList.appendChild(newListItem);
     text.appendChild(newList);
@@ -314,10 +346,6 @@ insertOrderedList.addEventListener("click", () => {
 insertUnorderedList.addEventListener("click", () => {
   creatingListTypes("ul", "li");
 });
-
-
-
-
 
 
 
