@@ -25,6 +25,9 @@ let fullScreen = document.getElementById('fullScreen');
 let info = document.getElementById('info')
 let infoContent = document.getElementById('infoContent')
 let overlay = document.getElementById("overlay");
+let downloadBtn = document.getElementById("download");
+let upload = document.getElementById("upload");
+let uploadBtn = document.getElementById("uploadBtn");
 
 
 let savedinnerHTML = [];
@@ -324,7 +327,7 @@ justifyFull.addEventListener("click", () => {setSelectionAlignment("justify");})
 
 // download
 
-document.getElementById("download").addEventListener("click", () => {
+downloadBtn.addEventListener("click", () => {
 
   filterSavedContent();
 
@@ -342,3 +345,29 @@ document.getElementById("download").addEventListener("click", () => {
   downloadLink.download = "formatted-text.doc";
   downloadLink.click(); 
 });
+
+// upload
+
+uploadBtn.addEventListener("click", () => {
+  upload.click();
+});
+
+upload.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const fileContent = event.target.result;
+
+      text.innerHTML = fileContent;
+      
+      savedinnerHTML.push(fileContent);
+      currentIndex = savedinnerHTML.length - 1;
+    };
+
+    reader.readAsText(file);
+  }
+});
+
