@@ -62,11 +62,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-document.addEventListener("click", (event) => {
-  if (event.target !== text) {
-    checkSpace();
-  }
-});
 
 function updateFontFamily(fontFamily) {
   text.style.fontFamily = fontFamily;
