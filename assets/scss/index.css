@@ -45,6 +45,10 @@ body {
   gap: 5px;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.1s;
+}
+.buttons .load:hover {
+  scale: 1.1;
 }
 .buttons .load img {
   margin-top: 2px;
@@ -69,12 +73,20 @@ body {
   padding: 5px 9px;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.1s;
+}
+.container .options .option-button:hover {
+  scale: 1.1;
 }
 .container .options .option-advanced {
   border-radius: 4px;
   border: 2px solid;
   background-color: #F0F0F0;
   cursor: pointer;
+  transition: all 0.1s;
+}
+.container .options .option-advanced:hover {
+  scale: 1.1;
 }
 .container .options .input-wrapper {
   display: flex;
@@ -83,7 +95,11 @@ body {
   background-color: #F0F0F0;
   border: 2px solid black;
   border-radius: 4px;
+  transition: all 0.1s;
   cursor: pointer;
+}
+.container .options .input-wrapper:hover {
+  scale: 1.1;
 }
 .container #text-input {
   margin-top: 10px;
