@@ -21,7 +21,6 @@ let foreColor = document.getElementById('foreColor');
 let optionButton = document.querySelectorAll(".option-button");
 let advOptionButton = document.querySelectorAll(".adv-option-button");
 let text = document.getElementById('text-input');
-let format = document.getElementById('format');
 
 let savedinnerHTML = [];
 let formatIndexArray = [];
@@ -58,6 +57,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "\\") {
     event.preventDefault();
     checkSpace();
+    filterSavedContent();
   }
 });
 
@@ -115,17 +115,11 @@ function filterSavedContent() {
   }
 }
 
-format.addEventListener("click", () => {
-  filterSavedContent();
-  save();
-});
-
-
 function save() {
   const currentText = text.innerHTML
 
   if (currentText === '' || currentText === '&nbsp;') {
-    return;
+    return;  
   }
 
   if (savedinnerHTML.length === 0 || currentText !== savedinnerHTML[currentIndex]) {
