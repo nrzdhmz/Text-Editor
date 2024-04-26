@@ -330,3 +330,26 @@ justifyFull.addEventListener("click", () => {
   setSelectionAlignment("justify");
 }); 
 
+
+
+
+// download
+
+document.getElementById("download").addEventListener("click", () => {
+
+  filterSavedContent();
+
+  const wordContent = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+      <head><title>Document</title></head>
+      <body>${text.innerHTML}</body>
+    </html>
+  `;
+
+  const blob = new Blob([wordContent], { type: "application/msword" });
+  const downloadLink = document.createElement("a");
+  
+  downloadLink.href = URL.createObjectURL(blob);
+  downloadLink.download = "formatted-text.doc";
+  downloadLink.click(); 
+});

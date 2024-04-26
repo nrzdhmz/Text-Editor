@@ -11,7 +11,7 @@ body {
   justify-content: center;
 }
 
-#format {
+.btnstyle {
   width: 100px;
   height: 30px;
 }
