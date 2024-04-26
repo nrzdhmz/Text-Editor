@@ -21,10 +21,31 @@ let foreColor = document.getElementById('foreColor');
 let optionButton = document.querySelectorAll(".option-button");
 let advOptionButton = document.querySelectorAll(".adv-option-button");
 let text = document.getElementById('text-input');
+let fullScreen = document.getElementById('fullScreen');
+let info = document.getElementById('info')
+let infoContent = document.getElementById('infoContent')
+let overlay = document.getElementById("overlay");
+
 
 let savedinnerHTML = [];
 let formatIndexArray = [];
 let currentIndex = -1;
+
+info.addEventListener("click", () => {
+  const isCurrentlyVisible = infoContent.style.display === "block";
+
+  infoContent.style.display = isCurrentlyVisible ? "none" : "block";
+  overlay.style.display = isCurrentlyVisible ? "none" : "block";
+});
+
+overlay.addEventListener("click", () => {
+  infoContent.style.display = "none";
+  overlay.style.display = "none";
+});
+
+infoContent.addEventListener("click", (e) => {
+  e.stopPropagation(); 
+});
 
 function endsWithFormattingOrNBSP(textContent) {
   const formattingTags = ["em", "sub", "sup", "u", "strike", "b"];
@@ -52,6 +73,21 @@ function checkSpace() {
 
   save();
 }
+
+fullScreen.addEventListener("click", () => {
+  const element = document.documentElement;
+
+  if (!document.fullscreenElement) {
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+});
+
 
 document.addEventListener("keydown", (event) => {
   if (event.ctrlKey) {
@@ -144,10 +180,6 @@ function save() {
     console.log("Content saved:", savedinnerHTML);
   }
 }
-
-
-
-
 
 function undoMethod() {
   if (currentIndex > 0) { 
@@ -282,21 +314,10 @@ function setSelectionAlignment(alignment) {
   }
 }
 
-justifyLeft.addEventListener("click", () => {
-  setSelectionAlignment("left");
-});
-
-justifyCenter.addEventListener("click", () => {
-  setSelectionAlignment("center");
-});
-
-justifyRight.addEventListener("click", () => {
-  setSelectionAlignment("right");
-});
-
-justifyFull.addEventListener("click", () => {
-  setSelectionAlignment("justify");
-}); 
+justifyLeft.addEventListener("click", () => {setSelectionAlignment("left");});
+justifyCenter.addEventListener("click", () => {setSelectionAlignment("center");});
+justifyRight.addEventListener("click", () => {setSelectionAlignment("right");});
+justifyFull.addEventListener("click", () => {setSelectionAlignment("justify");}); 
 
 
 

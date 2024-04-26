@@ -1,127 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Text Editor</title>
     <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
+        rel="stylesheet"
     />
-    <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
-    rel="stylesheet"
-  />
     <!-- Google Fonts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
-      rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+        rel="stylesheet"
     />
     <!-- Stylesheet -->
     <link rel="stylesheet" href="../assets/scss/index.css" />
-  </head>
-  <body>
-    <div class="container"> 
-      <div class="options">
-        <!-- Text Format -->
-        <button id="bold" class="option-button format">
-          <i class="fa-solid fa-bold"></i>
-        </button>
-        <button id="italic" class="option-button format">
-          <i class="fa-solid fa-italic"></i>
-        </button>
-        <button id="underline" class="option-button format">
-          <i class="fa-solid fa-underline"></i>
-        </button>
-        <button id="strikethrough" class="option-button format">
-          <i class="fa-solid fa-strikethrough"></i>
-        </button>
-        <button id="superscript" class="option-button script">
-          <i class="fa-solid fa-superscript"></i>
-        </button>
-        <button id="subscript" class="option-button script">
-          <i class="fa-solid fa-subscript"></i>
-        </button>
+</head>
+<body>
+    <div id="fullScreen" class="tool right"><img src="../assets/img/fullScreen.svg" alt="fullScreen Icon"></div>
+    <div id="info" class="tool left"><img src="../assets/img/info.svg" alt="info Icon"></div>
+    <div id="overlay" style="display: none;"></div>
 
-        <!-- List -->
-        <button id="insertOrderedList" class="option-button">
-          <div class="fa-solid fa-list-ol"></div>
-        </button>
-        <button id="insertUnorderedList" class="option-button">
-          <i class="fa-solid fa-list"></i>
-        </button>
+    <div class="container">
+        <div class="options">
+            <!-- Text Format -->
+            <button id="bold" class="option-button format"><i class="fa-solid fa-bold"></i></button>
+            <button id="italic" class="option-button format"><i class="fa-solid fa-italic"></i></button>
+            <button id="underline" class="option-button format"><i class="fa-solid fa-underline"></i></button>
+            <button id="strikethrough" class="option-button format"><i class="fa-solid fa-strikethrough"></i></button>
+            <button id="superscript" class="option-button script"><i class="fa-solid fa-superscript"></i></button>
+            <button id="subscript" class="option-button script"><i class="fa-solid fa-subscript"></i></button>
 
-        <!-- Undo/Redo -->
-        <button id="undo" class="option-button">
-          <i class="fa-solid fa-rotate-left"></i>
-        </button>
-        <button id="redo" class="option-button">
-          <i class="fa-solid fa-rotate-right"></i>
-        </button>
+            <!-- List -->
+            <button id="insertOrderedList" class="option-button"><div class="fa-solid fa-list-ol"></div></button>
+            <button id="insertUnorderedList" class="option-button"><i class="fa-solid fa-list"></i></button>
 
-        <!-- Alignment -->
-        <button id="justifyLeft" class="option-button align">
-          <i class="fa-solid fa-align-left"></i>
-        </button>
-        <button id="justifyCenter" class="option-button align">
-          <i class="fa-solid fa-align-center"></i>
-        </button>
-        <button id="justifyRight" class="option-button align">
-          <i class="fa-solid fa-align-right"></i>
-        </button>
-        <button id="justifyFull" class="option-button align">
-          <i class="fa-solid fa-align-justify"></i>
-        </button>
-        <button id="indent" class="option-button spacing">
-          <i class="fa-solid fa-indent"></i>
-        </button>
-        <button id="outdent" class="option-button spacing">
-          <i class="fa-solid fa-outdent"></i>
-        </button>
+            <!-- Undo/Redo -->
+            <button id="undo" class="option-button"><i class="fa-solid fa-rotate-left"></i></button>
+            <button id="redo" class="option-button"><i class="fa-solid fa-rotate-right"></i></button>
 
-        <!-- Headings -->
-        <select id="formatBlock" class="option-advanced">
-          <option value="34px">H1</option>
-          <option value="30px">H2</option>
-          <option value="24px">H3</option>
-          <option value="20px">H4</option>
-          <option value="18px">H5</option>
-          <option value="16px">H6</option>
-        </select>
+            <!-- Alignment -->
+            <button id="justifyLeft" class="option-button align"><i class="fa-solid fa-align-left"></i></button>
+            <button id="justifyCenter" class="option-button align"><i class="fa-solid fa-align-center"></i></button>
+            <button id="justifyRight" class="option-button align"><i class="fa-solid fa-align-right"></i></button>
+            <button id="justifyFull" class="option-button align"><i class="fa-solid fa-align-justify"></i></button>
+            <button id="indent" class="option-button spacing">
+              <i class="fa-solid fa-indent"></i>
+            </button>
+            <button id="outdent" class="option-button spacing">
+              <i class="fa-solid fa-outdent"></i>
+            </button>
 
+            <!-- Headings -->
+            <select id="formatBlock" class="option-advanced">
+                <option value="34px">H1</option>
+                <option value="30px">H2</option>
+                <option value="24px">H3</option>
+                <option value="20px">H4</option>
+                <option value="18px">H5</option>
+                <option value="16px">H6</option>
+            </select>
 
-        <!-- Font -->
-        <select id="fontName" class="option-advanced">
-          <option value="Arial">Arial</option>
-          <option value="Poppins">Poppins</option>
-          <option value="Times New Roman">Times New Roman</option>
-          <option value="Courier New">Courier New</option>
-          <option value="Georgia">Georgia</option>
-          <option value="Verdana">Verdana</option>
-          <option value="Comic Sans MS">Comic Sans MS</option>
-        </select>       
-        
-        <!-- FontSize -->
-        <select id="fontSize" class="option-advanced">
-          <option value="12px">12px</option>
-          <option value="14px">14px</option>
-          <option value="16px">16px</option>
-          <option value="18px">18px</option>
-          <option value="20px">20px</option>
-          <option value="24px">24px</option>
-          <option value="30px">30px</option>
-        </select>
-        <!-- Color -->
-        <div class="input-wrapper">
-          <input type="color" id="foreColor" class="adv-option-button" />
-          <label for="foreColor">Font Color</label>
+            <!-- Font -->
+            <select id="fontName" class="option-advanced">
+                <option value="Arial">Arial</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+            </select> 
+
+            <!-- FontSize -->
+            <select id="fontSize" class="option-advanced">
+                <option value="12px">12px</option>
+                <option value="14px">14px</option>
+                <option value="16px">16px</option>
+                <option value="18px">20px</option>
+                <option value="24px">24px</option>
+                <option value="30px">30px</option>
+            </select>
+            
+            <!-- Color -->
+            <div class="input-wrapper">
+                <input type="color" id="foreColor" class="adv-option-button" />
+                <label for="foreColor">Font Color</label>
+            </div>
         </div>
-      </div>
-      <div id="text-input" contenteditable="true"></div>
-      <button id="download" class="btnstyle">download</button>
+
+        <!-- Text input area -->
+        <div id="text-input" contenteditable="true"></div>
+
+        <!-- README or Info Content -->
+        <div id="infoContent" style="display: none;">
+            <h2>README for Web-Based Text Editor</h2>
+            <p><strong>Introduction:</strong> This web-based text editor allows you to create and format text with various features such as bold, italic, underline, strikethrough, superscript, subscript, text alignment, lists, undo/redo, and more.</p>
+            <p><strong>Features:</strong></p>
+            <ul>
+                <li>Text formatting options: Bold, Italic, Underline, Strikethrough, Superscript, Subscript</li>
+                <li>Text alignment options: Justify Left, Justify Center, Justify Right, Justify Full</li>
+                <li>List options: Ordered and Unordered lists</li>
+                <li>Font and size options: Choose from various fonts and font sizes</li>
+                <li>Color options: Change the text color</li>
+                <li>Undo/Redo support</li>
+                <li>Download formatted text as a Word document</li>
+                <li>Keyboard shortcuts for common formatting operations</li>
+                <li>Fullscreen toggle for enhanced visibility</li>
+            </ul>
+
+            <p><strong>Usage:</strong> Here's how to use the text editor:
+            <ul>
+                <li><strong>Text Input:</strong> Start by typing in the text input area.</li>
+                <li><strong>Formatting Options:</strong> Use the toolbar to apply various formatting options.</li>
+                <li><strong>Alignment and Lists:</strong> Adjust text alignment and create ordered/unordered lists.</li>
+                <li><strong>Font and Size Options:</strong> Use the drop-down menus to change the font and font size.</li>
+                <li><strong>Color Options:</strong> Use the color picker to change the text color.</li>
+                <li><strong>Keyboard Shortcuts:</strong> Ctrl + B for Bold, Ctrl + I for Italic, Ctrl + U for Underline, Ctrl + Z for Undo, Ctrl + Y for Redo.</li>
+                <li><strong>Fullscreen:</strong> Click the Fullscreen icon to toggle fullscreen mode for a larger editing space.</li>
+                <li><strong>Undo/Redo:</strong> Use the Undo/Redo buttons to revert or redo recent changes.</li>
+                <li><strong>Download:</strong> Click the Download button to save the formatted text as a Word document.</li>
+            </ul>
+            </p>
+        </div>
+
+        <button id="download" class="btnstyle"><img src="../assets/img/download.svg" alt="Download Icon"> Download</button>
 
     </div>
-    <!--Script-->
+
+    <!-- Script -->
     <script src="../assets/js/script.js"></script>
   </body>
 </html>
