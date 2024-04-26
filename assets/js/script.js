@@ -18,7 +18,6 @@ let formatBlock = document.getElementById('formatBlock');
 let fontName = document.getElementById('fontName');
 let fontSize = document.getElementById('fontSize');
 let foreColor = document.getElementById('foreColor');
-let backColor = document.getElementById('backColor');
 let optionButton = document.querySelectorAll(".option-button");
 let advOptionButton = document.querySelectorAll(".adv-option-button");
 let text = document.getElementById('text-input');
@@ -60,6 +59,16 @@ document.addEventListener("keydown", (event) => {
     event.preventDefault();
     checkSpace();
   }
+});
+
+function updateFontColor(color) {
+  text.style.color = color;
+}
+
+foreColor.addEventListener("change", (e) => {
+  const selectedColor = e.target.value;
+  updateFontColor(selectedColor); 
+  save(); 
 });
 
 
