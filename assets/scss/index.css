@@ -102,6 +102,9 @@ body {
   justify-content: center;
   top: 100px;
 }
+#infoContent li {
+  margin-left: 20px;
+}
 
 #overlay {
   position: fixed;

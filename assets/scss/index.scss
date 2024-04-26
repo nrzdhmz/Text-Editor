@@ -29,8 +29,6 @@ body {
 .right{
   right: 40px;
 }
-
-
 .container {
   display: flex;
   flex-direction: column;
@@ -103,6 +101,9 @@ body {
   position: fixed;
   justify-content: center;
   top: 100px;
+  li{
+    margin-left: 20px;
+  }
 }
 #overlay {
   position: fixed;
