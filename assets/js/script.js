@@ -28,15 +28,45 @@ let savedinnerHTML = [];
 let formatIndexArray = [];
 let currentIndex = -1;
 
+function endsWithFormattingOrNBSP(textContent) {
+  const formattingTags = ["em", "sub", "sup", "u", "strike", "b"];
+  
+  let endsWithTag = false;
+  
+  formattingTags.forEach((tag) => {
+    const formattedEnd = `>*<\/${tag}>`;
+    if (textContent.endsWith(formattedEnd)) {
+      endsWithTag = true;
+    }
+  });
+
+  const endsWithNBSP = textContent.endsWith('&nbsp;');
+  
+  return endsWithTag || endsWithNBSP;
+}
+
+function checkSpace() {
+  const textContent = text.innerHTML.trim();
+
+  if (!endsWithFormattingOrNBSP(textContent)) {
+    text.innerHTML += '&nbsp;';
+  }
+
+  save();
+}
+
 document.addEventListener("keydown", (event) => {
   if (event.key === "\\") {
     event.preventDefault();
-    save();
-    console.log("Save function called using '\\' key");
+    checkSpace();
   }
 });
 
-
+document.addEventListener("click", (event) => {
+  if (event.target !== text) {
+    checkSpace();
+  }
+});
 
 function updateFontFamily(fontFamily) {
   text.style.fontFamily = fontFamily;
@@ -107,30 +137,6 @@ function save() {
 }
 
 
-
-document.addEventListener("click", (event) => {
-  if (event.target !== text) {
-    const textContent = text.innerHTML.trim();
-    const formattingTags = ["em", "sub", "sup", "u", "strike", "b"];
-    
-    let endsWithTag = false;
-
-    formattingTags.forEach((tag) => {
-      const formattedEnd = `>*<\/${tag}>`;
-      if (textContent.endsWith(formattedEnd)) {
-        endsWithTag = true;
-      }
-    });
-
-    const nbsp = textContent.endsWith('&nbsp;');
-
-    if (!endsWithTag && !nbsp) {
-      text.innerHTML += '&nbsp;';
-    }
-
-    save();
-  }
-});
 
 
 
