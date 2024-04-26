@@ -55,8 +55,8 @@ function endsWithFormattingOrNBSP(textContent) {
   
   let endsWithTag = false;
   
-  formattingTags.forEach((tag) => {
-    const formattedEnd = `>*<\/${tag}>`;
+  formattingTags.forEach(() => {
+    const formattedEnd = `}>`;
     if (textContent.endsWith(formattedEnd)) {
       endsWithTag = true;
     }
@@ -262,6 +262,33 @@ underline.addEventListener("click", () => {combineFunctions("u");});
 strikethrough.addEventListener("click", () => {combineFunctions("strike");});
 superscript.addEventListener("click", () => {combineFunctions("sup");});
 subscript.addEventListener("click", () => {combineFunctions("sub");});
+
+
+
+
+
+function creatingListTypes (list,listItem){
+
+  let formatIndex = currentIndex;
+  formatIndexArray.push(formatIndex);
+
+  formatIndexArray.forEach(item => {
+    text.innerHTML =  savedinnerHTML[item] + `<${list}><${listItem}>*</${listItem}></${list}>`;
+  });
+}
+
+insertOrderedList.addEventListener("click", () => {
+  creatingListTypes("ol","li");
+});
+
+insertUnorderedList.addEventListener("click", () => {
+  creatingListTypes("ul","li");
+});
+
+
+
+
+
 
 
 document.addEventListener("click", (event) => {
