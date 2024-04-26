@@ -40,7 +40,6 @@ let savedinnerHTML = [];
 let formatIndexArray = [];
 let currentIndex = -1;
 
-
 info.addEventListener("click", () => {
   const isCurrentlyVisible = infoContent.style.display === "block";
 
@@ -180,6 +179,8 @@ text.addEventListener("keydown", (event) => {
       selection.removeAllRanges(); 
       selection.addRange(range); 
 
+      filterSavedContent();
+      moveCursorToEnd(text);
     } else {
       const selection = document.getSelection();
       if (selection.rangeCount > 0) {
@@ -217,12 +218,15 @@ function moveCursorToEnd(element) {
   const range = document.createRange();
   const selection = window.getSelection();
 
+  // Set the range to the last child of the element
   range.selectNodeContents(element);
-  range.collapse(false); 
+  range.collapse(false); // Collapse range to end of content
 
+  // Remove any existing selections and add new range
   selection.removeAllRanges();
   selection.addRange(range);
 
+  // Ensure the cursor is visible when content is long
   element.focus();
 }
 
@@ -303,7 +307,7 @@ formatBlock.addEventListener("change", (e) => {
   let formatIndex = currentIndex;
   formatIndexArray.push(formatIndex);
   formatIndexArray.forEach(item => {
-    text.innerHTML = savedinnerHTML[item] + `<p style="font-size:${selectedSize};">*</p>`;
+    text.innerHTML = savedinnerHTML[item] + `<div style="font-size:${selectedSize};">*</div>`;
   });
 });
 
