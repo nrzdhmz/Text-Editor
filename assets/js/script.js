@@ -40,6 +40,7 @@ let savedinnerHTML = [];
 let formatIndexArray = [];
 let currentIndex = -1;
 
+
 info.addEventListener("click", () => {
   const isCurrentlyVisible = infoContent.style.display === "block";
 
@@ -110,12 +111,15 @@ document.addEventListener("keydown", (event) => {
     }else if(event.key === 'b'){
       event.preventDefault();
       combineFunctions("b");
+      moveCursorToEnd(text);
     }else if(event.key === 'i'){
       event.preventDefault();
       combineFunctions("em");
+      moveCursorToEnd(text);
     }else if(event.key === 'u'){
       event.preventDefault();
       combineFunctions("u");
+      moveCursorToEnd(text);
     }
   }
 });
@@ -159,6 +163,7 @@ function isInsideList() {
 
 text.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
+
     event.preventDefault(); 
 
     const listContext = isInsideList();
@@ -174,6 +179,7 @@ text.addEventListener("keydown", (event) => {
 
       selection.removeAllRanges(); 
       selection.addRange(range); 
+
     } else {
       const selection = document.getSelection();
       if (selection.rangeCount > 0) {
@@ -193,6 +199,7 @@ text.addEventListener("keydown", (event) => {
       }
     }
   }
+
 });
 
 
@@ -210,15 +217,12 @@ function moveCursorToEnd(element) {
   const range = document.createRange();
   const selection = window.getSelection();
 
-  // Set the range to the last child of the element
   range.selectNodeContents(element);
-  range.collapse(false); // Collapse range to end of content
+  range.collapse(false); 
 
-  // Remove any existing selections and add new range
   selection.removeAllRanges();
   selection.addRange(range);
 
-  // Ensure the cursor is visible when content is long
   element.focus();
 }
 
